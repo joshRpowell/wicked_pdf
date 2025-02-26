@@ -7,7 +7,6 @@ require 'logger'
 require 'digest/md5'
 require 'rbconfig'
 require 'open3'
-require 'ostruct'
 
 require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/object/blank'
@@ -34,10 +33,10 @@ class WickedPdf
   end
 
   def self.configure
-    config = OpenStruct.new(@@config)
+    config = @@config.dup
     yield config
 
-    @@config.merge! config.to_h
+    @@config.merge! config
   end
 
   def self.clear_config
